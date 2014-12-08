@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myapp">
+<head>
+    <title></title>
+
+    <script src="libs/d3.min.js"></script>
+    <script src="libs/moment.min.js"></script>
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-moment.min.js"></script>
+    
+    <script src="timepicker.directive.js"></script>
+    <link rel="stylesheet" href="timepicker.css">
+
+    <style>
+        body {
+            background: #555555;
+        }
+    </style>
+</head>
+<body ng-controller="TimepickerDemoCtrl">
+
+    <ui-timepicker ng-model="mydatetime"></ui-timepicker>
+
+    <button ng-click="showTime()">Show selected time</button>
+
+    <script>
+        var app = angular.module("myapp", ["ui.timepicker"]);
+
+        app.controller("TimepickerDemoCtrl", ["$scope", function ($scope) {
+            $scope.mydatetime = new Date();
+
+            $scope.showTime = function () {
+                alert(moment($scope.mydatetime).format("HH:mm"));
+            };
+        }]);
+    </script>
+
+</body>
+</html>

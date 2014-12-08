@@ -1,0 +1,45 @@
+.x1-timepicker-svg {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+}
+
+.x1-timepicker-svg .x1-timepicker-background {
+    fill: #555555;
+    fill-opacity: 0.01;
+}
+
+.x1-timepicker-svg .x1-timepicker-component {
+    fill: #909090;
+}
+
+.x1-timepicker-svg .x1-timepicker-inner {
+    fill: #383838;
+}
+
+.x1-timepicker-svg .x1-timepicker-labels {
+
+}
+
+.x1-timepicker-svg .x1-timepicker-labels .title {
+    font-family: Myriad, "Helvetic Neue", Helvetica, Arial;
+    text-anchor: middle;
+    fill: #FFFFFF;
+}
+
+.x1-timepicker-svg .x1-timepicker-labels .time,
+.x1-timepicker-svg .x1-timepicker-labels .ampm {
+    font-family: Myriad, "Helvetic Neue", Helvetica, Arial;
+    text-anchor: middle;
+    fill: #f8b810;
+}
+
+.x1-timepicker-svg .x1-timepicker-arcs {
+
+}
+
+.x1-timepicker-svg .x1-timepicker-arcs .arc {
+    stroke-weight: 0.1;
+    fill: #f8b810;
+}
