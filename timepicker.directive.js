@@ -100,6 +100,7 @@ angular.module("ui.timepicker", ["angularMoment"])
                                 d3.select(this).text("AM");
                                 scope.datetime = moment(scope.datetime).add(-12, 'hour').toDate();
                             }
+                            scope.$apply();
                         });
 
                     // ---------- slider handler ------------------------------------------
