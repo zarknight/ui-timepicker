@@ -93,13 +93,9 @@ angular.module("ui.timepicker", ["angularMoment"])
                         .attr("width", _width)
                         .style("font-size", (_fontSize * 0.6) + "px")
                         .on("click", function () {
-                            if (isAM(scope.datetime)) {
-                                d3.select(this).text("PM");
-                                scope.datetime = moment(scope.datetime).add(+12, 'hour').toDate();
-                            } else {
-                                d3.select(this).text("AM");
-                                scope.datetime = moment(scope.datetime).add(-12, 'hour').toDate();
-                            }
+                            var offset = isAM(scope.datetime) ? 12 : -12;
+                            scope.datetime = moment(scope.datetime).add(offset, 'hour').toDate();
+                            d3.select(this).text(moment(scope.datetime).format("A"));
                             scope.$apply();
                         });
 
@@ -164,13 +160,19 @@ angular.module("ui.timepicker", ["angularMoment"])
 
 
                     // ---------- set the init value from ng-model ----------------------------------------------
-                    var hours = moment(scope.datetime).hours();
-                    var hours12 = hours >= 12 ? hours - 12 : hours;
-                    var minutes = moment(scope.datetime).minutes();
+                    var updateValue = function (v) {
+                        var hours = moment(v).hours();
+                        var hours12 = hours >= 12 ? hours - 12 : hours;
+                        var minutes = moment(v).minutes();
+                        _value = (hours12 * 60 + minutes);
+                        setCurrent(selectedArc, handler, labelTime, labelAMPM);
+                    };
 
-                    _value = (hours12 * 60 + minutes);
+                    updateValue(scope.datetime);
 
-                    setCurrent(selectedArc, handler, labelTime, labelAMPM);
+                    scope.$watch("datetime", function (newVal, oldVal) {
+                        updateValue(newVal);
+                    });
                 });
 
                 function isAM (date) {
