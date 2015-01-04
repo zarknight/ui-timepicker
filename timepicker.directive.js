@@ -33,6 +33,8 @@ angular.module("ui.timepicker", ["angularMoment"])
                 var _maxValue = 720;
                 var _value = 1;
 
+                var _setAsAM = false;
+
                 _selection.each(function (data) {
                     measure();
 
@@ -93,7 +95,9 @@ angular.module("ui.timepicker", ["angularMoment"])
                         .attr("width", _width)
                         .style("font-size", (_fontSize * 0.6) + "px")
                         .on("click", function () {
-                            var offset = isAM(scope.datetime) ? 12 : -12;
+                            var blnAM = isAM(scope.datetime);
+                            var offset = blnAM ? 12 : -12;
+                            _setAsAM = !blnAM;
                             scope.datetime = moment(scope.datetime).add(offset, 'hour').toDate();
                             d3.select(this).text(moment(scope.datetime).format("A"));
                             scope.$apply();
@@ -135,11 +139,11 @@ angular.module("ui.timepicker", ["angularMoment"])
 
                         // update scope.datetime
                         var hours = Math.floor(_value / 60);
-                        var minutes = _value % 60;
+                        hours = _setAsAM ? hours : (hours + 12);
 
                         scope.datetime = moment(scope.datetime)
-                            .set('hour', (isAM(scope.datetime) ? hours : (hours + 12)))
-                            .set('minute', minutes)
+                            .set('hour', hours)
+                            .set('minute', _value % 60)
                             .set('second', 0)
                             .toDate();
 
@@ -158,7 +162,6 @@ angular.module("ui.timepicker", ["angularMoment"])
                         .attr("fill", "#FFFFFF")
                         .call(drag);
 
-
                     // ---------- set the init value from ng-model ----------------------------------------------
                     var updateValue = function (v) {
                         var hours = moment(v).hours();
@@ -169,6 +172,8 @@ angular.module("ui.timepicker", ["angularMoment"])
                     };
 
                     updateValue(scope.datetime);
+
+                    _setAsAM = isAM(scope.datetime);
 
                     scope.$watch("datetime", function (newVal, oldVal) {
                         updateValue(newVal);
